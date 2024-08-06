@@ -1,0 +1,39 @@
+{
+	"name": "bronze_olist_geolocation_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dbolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "geolocation_zip_code_prefix",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "geolocation_lat",
+				"type": "varchar"
+			},
+			{
+				"name": "geolocation_lng",
+				"type": "varchar"
+			},
+			{
+				"name": "geolocation_city",
+				"type": "varchar"
+			},
+			{
+				"name": "geolocation_state",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "bronze_olist_geolocation_dataset"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,47 @@
+{
+	"name": "bronze_olist_order_reviews_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dbolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "review_id",
+				"type": "varchar"
+			},
+			{
+				"name": "order_id",
+				"type": "varchar"
+			},
+			{
+				"name": "review_score",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "review_comment_title",
+				"type": "varchar"
+			},
+			{
+				"name": "review_comment_message",
+				"type": "varchar"
+			},
+			{
+				"name": "review_creation_date",
+				"type": "varchar"
+			},
+			{
+				"name": "review_answer_timestamp",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "bronze_olist_order_reviews_dataset"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

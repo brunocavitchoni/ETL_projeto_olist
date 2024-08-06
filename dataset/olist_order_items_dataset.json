@@ -1,0 +1,50 @@
+{
+	"name": "olist_order_items_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "olist_order_items_dataset.parquet",
+				"container": "arquivos"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_item_id",
+				"type": "INT64"
+			},
+			{
+				"name": "product_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "seller_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "shipping_limit_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "price",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "freight_value",
+				"type": "DOUBLE"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

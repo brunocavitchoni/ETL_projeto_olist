@@ -1,0 +1,39 @@
+{
+	"name": "bronze_olist_customer_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dbolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "customer_id",
+				"type": "varchar"
+			},
+			{
+				"name": "customer_unique_id",
+				"type": "varchar"
+			},
+			{
+				"name": "customer_zip_code_prefix",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customer_city",
+				"type": "varchar"
+			},
+			{
+				"name": "customer_state",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "bronze_olist_customers_dataset"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

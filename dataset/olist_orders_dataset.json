@@ -1,0 +1,54 @@
+{
+	"name": "olist_orders_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "olist_orders_dataset.parquet",
+				"container": "arquivos"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "customer_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_purchase_timestamp",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_approved_at",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_delivered_carrier_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_delivered_customer_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_estimated_delivery_date",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

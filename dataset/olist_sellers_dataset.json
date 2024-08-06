@@ -1,0 +1,38 @@
+{
+	"name": "olist_sellers_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "olist_sellers_dataset.parquet",
+				"container": "arquivos"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "seller_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "seller_zip_code_prefix",
+				"type": "INT64"
+			},
+			{
+				"name": "seller_city",
+				"type": "UTF8"
+			},
+			{
+				"name": "seller_state",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

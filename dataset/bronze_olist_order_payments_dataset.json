@@ -1,0 +1,40 @@
+{
+	"name": "bronze_olist_order_payments_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dbolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "varchar"
+			},
+			{
+				"name": "payment_sequential",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "payment_type",
+				"type": "varchar"
+			},
+			{
+				"name": "payment_installments",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "payment_value",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "bronze_olist_order_payments_dataset"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,42 @@
+{
+	"name": "olist_customer_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "olist_customers_dataset.parquet",
+				"container": "arquivos"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "customer_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "customer_unique_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "customer_zip_code_prefix",
+				"type": "INT64"
+			},
+			{
+				"name": "customer_city",
+				"type": "UTF8"
+			},
+			{
+				"name": "customer_state",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

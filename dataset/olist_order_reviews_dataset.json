@@ -1,0 +1,50 @@
+{
+	"name": "olist_order_reviews_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "olist_order_reviews_dataset.parquet",
+				"container": "arquivos"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "review_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "review_score",
+				"type": "INT64"
+			},
+			{
+				"name": "review_comment_title",
+				"type": "UTF8"
+			},
+			{
+				"name": "review_comment_message",
+				"type": "UTF8"
+			},
+			{
+				"name": "review_creation_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "review_answer_timestamp",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

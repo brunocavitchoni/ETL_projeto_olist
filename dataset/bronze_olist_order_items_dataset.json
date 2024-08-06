@@ -1,0 +1,47 @@
+{
+	"name": "bronze_olist_order_items_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dbolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "varchar"
+			},
+			{
+				"name": "order_item_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "product_id",
+				"type": "varchar"
+			},
+			{
+				"name": "seller_id",
+				"type": "varchar"
+			},
+			{
+				"name": "shipping_limit_date",
+				"type": "varchar"
+			},
+			{
+				"name": "price",
+				"type": "varchar"
+			},
+			{
+				"name": "freight_value",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "bronze_olist_order_items_dataset"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

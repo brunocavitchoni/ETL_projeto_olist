@@ -1,0 +1,9 @@
+{
+	"name": "DFOlist",
+	"location": "brazilsouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b88d3ef7-338a-4e86-a844-319d234c9c9b",
+		"tenantId": "b7a9684e-c2eb-477d-b074-5cb8272db319"
+	}
+}

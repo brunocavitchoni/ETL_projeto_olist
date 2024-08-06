@@ -1,0 +1,58 @@
+{
+	"name": "olist_products_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlolist",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "olist_products_dataset.parquet",
+				"container": "arquivos"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "product_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "product_category_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "product_name_lenght",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "product_description_lenght",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "product_photos_qty",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "product_weight_g",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "product_length_cm",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "product_height_cm",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "product_width_cm",
+				"type": "DOUBLE"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
