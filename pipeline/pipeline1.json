@@ -511,6 +511,303 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Transform to silver_olist_customers_dataset",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_olist_customers_dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_olist_customers_dataset\nSELECT DISTINCT\n\tcustomer_id,\n\tcustomer_unique_id,\n\tcustomer_zip_code_prefix,\n\tREPLACE(REPLACE(customer_city,'''',' '),'  ', ' ') AS customer_city,\n\tcustomer_state\nFROM bronze_olist_customers_dataset\nORDER BY customer_state;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Transform to silver_olist_geolocation_dataset",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_olist_geolocation_dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_olist_geolocation_dataset\nSELECT DISTINCT\n    RIGHT('00000' + CONVERT(VARCHAR, geolocation_zip_code_prefix), 5) AS geolocation_zip_code_prefix,\n    REPLACE(REPLACE(REPLACE(geolocation_city, '´', ''), '.', ''), '*', '') AS geolocation_city,\n    geolocation_state\nFROM bronze_olist_geolocation_dataset\nORDER BY geolocation_city;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Transform to silver_olist_order_items_dataset",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_olist_order_items_dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_olist_order_items_dataset\nSELECT DISTINCT\n\torder_id,\n\torder_item_id,\n\tproduct_id,\n\tseller_id,\n\tCONVERT(DATETIME, shipping_limit_date, 120) AS shipping_limit_date,\n\tTRY_CAST(price AS DECIMAL(5,2)) AS price,\n\tTRY_CAST(freight_value AS DECIMAL(5,2)) AS freight_value\nFROM bronze_olist_order_items_dataset;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Transform to silver_olist_order_payments_dataset",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_olist_order_payments_dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_olist_order_payments_dataset\nSELECT DISTINCT\n\torder_id,\n\tpayment_sequential,\n\tpayment_type,\n\tpayment_installments,\n\tTRY_CAST(payment_value AS DECIMAL(5,2)) AS payment_value\nFROM bronze_olist_order_payments_dataset;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Transform to silver_olist_order_reviews_dataset",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_olist_order_reviews_dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_olist_order_reviews_dataset\nSELECT DISTINCT\n\treview_id,\n\torder_id,\n\treview_score,\n\treview_comment_title,\n\treview_comment_message,\n\tCASE WHEN CONVERT(DATETIME, review_creation_date, 120) IS NOT NULL\n         THEN CONVERT(DATETIME, review_creation_date, 120)\n         ELSE ('1900-01-01 00:00:00')\n    END AS review_creation_date,\n\tCASE WHEN CONVERT(DATETIME, review_answer_timestamp,120) IS NOT NULL\n         THEN CONVERT(DATETIME, review_answer_timestamp,120)\n         ELSE ('1900-01-01 00:00:00')\n    END AS review_answer_timestamp\nFROM bronze_olist_order_reviews_dataset;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Transform to silver_olist_orders_dataset",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_olist_orders_dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_olist_orders_dataset\nSELECT DISTINCT\n\torder_id,\n\tcustomer_id,\n\torder_status,\n\tCONVERT(DATETIME,order_purchase_timestamp, 120) AS order_purchase_timestamp,\n\tCONVERT(DATETIME,order_approved_at, 120) AS order_approved_at,\n\tCONVERT(DATETIME,order_delivered_carrier_date, 120) AS order_delivered_carrier_date,\n\tCONVERT(DATETIME,order_delivered_customer_date, 120) AS order_delivered_customer_date,\n\tCONVERT(DATETIME,order_estimated_delivery_date, 120) AS order_estimated_delivery_date\nFROM bronze_olist_orders_dataset;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Transform to silver_olist_sellers_dataset",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_olist_sellers_dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_olist_sellers_dataset\nSELECT DISTINCT\n\tseller_id,\n\tRIGHT('00000' + CONVERT(VARCHAR, seller_zip_code_prefix),5) AS seller_zip_code_prefix,\n\tseller_city,\n\tseller_state\nFROM bronze_olist_sellers_dataset;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Transform to silver_olist_products_dataset",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_olist_products_dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_olist_products_dataset\nSELECT DISTINCT\n\tproduct_id,\n\tproduct_category_name,\n\tproduct_name_lenght,\n\tproduct_description_lenght,\n\tproduct_photos_qty,\n\tproduct_weight_g,\n\tproduct_length_cm,\n\tproduct_height_cm,\n\tproduct_width_cm\nFROM bronze_olist_products_dataset;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Transform to silver_product_category_name_translation",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CopyData to bronze_product_category_name_translation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dbolist",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "INSERT INTO silver_product_category_name_translation\nSELECT DISTINCT\n\tproduct_category_name,\n\tproduct_category_name_english\nFROM bronze_product_category_name_translation;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
 			}
 		],
 		"annotations": [],
